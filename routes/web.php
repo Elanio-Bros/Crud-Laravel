@@ -39,9 +39,8 @@ Route::get('/delete/{codigo}', function ($codigo) {
     Route::dispatch($direct);
     return redirect(url()->previous());
 });
-Route::post('/editPessoa/{codigo}', function (Request $request) {
-    dd($request->all());
-    $direct=Request::create('/pessoa/update/{codigo}','POST',$request->except('_token'));
+Route::post('/editPessoa/{codigo}', function (Request $request,$codigo) {
+    $direct=Request::create('api/pessoa/update/'.$codigo,'POST',$request->except('_token'));
     Route::dispatch($direct);
     return redirect(url()->previous());
 });

@@ -48,6 +48,7 @@
 @endsection
 @section('script')
     <script>
+        const action=$('#editPessoa form').attr('action');
         $('tr button').click(function() {
             let data = []
             let values = $(this).closest('tr').children()
@@ -60,7 +61,7 @@
             $('#editPessoa form input[name="nome"]').val(data[1])
             $('#editPessoa form input[name="email"]').val(data[2])
             $('#editPessoa form select[name="categoria"]').val(data[3])
-            $('#editPessoa form').attr('action',$('#editPessoa form').attr('action')+'/'+data[0])
+            $('#editPessoa form').attr('action',action+'/'+data[0]);
 
         });
     </script>

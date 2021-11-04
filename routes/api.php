@@ -23,10 +23,11 @@ Route::get('/pessoas/categoria', [PessoaController::class,'getPessoascategoria']
 Route::get('/pessoa/categoria/{codigo}', [PessoaController::class,'getPessoacategoria']);
 Route::get('/pessoa/{codigo}', [PessoaController::class,'getPessoa']);
 Route::post('/pessoa/create', [PessoaController::class,'createPessoa']);
-Route::put('/pessoa/update/{codigo}', [PessoaController::class,'updatePessoa']);
-Route::patch('/pessoa/update/{codigo}', [PessoaController::class,'updatePatchPessoa']);
-Route::delete('/pessoa/delete/{codigo}', [PessoaController::class,'deletePessoa']);
 Route::post('/pessoa/update/{codigo}', [PessoaController::class,'updatePessoa']);
+Route::put('/pessoa/update/{codigo}', [PessoaController::class,'updatePessoa']);
 Route::post('/pessoa/update/{codigo}', [PessoaController::class,'updatePatchPessoa']);
+Route::patch('/pessoa/update/{codigo}', [PessoaController::class,'updatePatchPessoa']);
 Route::post('/pessoa/delete/{codigo}', [PessoaController::class,'deletePessoa']);
+Route::delete('/pessoa/delete/{codigo}', [PessoaController::class,'deletePessoa']);
+
 

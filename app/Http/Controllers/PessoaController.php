@@ -68,7 +68,6 @@ class PessoaController extends Controller
             'nome' => 'string',
             'email' => 'email',
         ]);
-
         $req = $request->only('nome', 'email', 'categoria');
         if (array_key_exists('email', $req)) {
             $req['e-mail'] = $req['email'];
