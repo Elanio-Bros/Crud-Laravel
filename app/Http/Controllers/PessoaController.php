@@ -17,7 +17,7 @@ class PessoaController extends Controller
      */
     public function getPessoas()
     {
-        return response()->json(Pessoa::all()->paginate(5), 200);
+        return response()->json(Pessoa::paginate(5), 200);
     }
     public function getPessoascategoria()
     {

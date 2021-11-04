@@ -2,16 +2,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Pessoas</a>
+                <a class="nav-link" href="{{url('/pessoas')}}">Pessoas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Categorias</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pessoas Categorias</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pesquisar Pessoa</a>
+                <a class="nav-link" href="{{url('/pessoas/categoria')}}">Pessoas Categorias</a>
             </li>
         </ul>
         <div class="btn-group dropleft">

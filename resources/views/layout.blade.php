@@ -48,7 +48,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Pessoa</h5>
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -65,11 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Categoria</label>
-                        <select name="categoria" class="form-control">
-                            <option value="Admin">Admin</option>
-                            <option value="Gerente">Gerente</option>
-                            <option value="Normal">Normal</option>
-                        </select>
+                        @yield('selectEditPessoa')
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Salvar</button>

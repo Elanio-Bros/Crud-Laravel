@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title') Pessoas Com Categorias @endsection
+@section('title') Pessoas @endsection
 @section('content')
     @includeIf('nav')
     <div>
@@ -19,7 +19,7 @@
                         <th scope="row">{{ $pessoa['codigo'] }}</th>
                         <td>{{ $pessoa['nome'] }}</td>
                         <td>{{ $pessoa['e-mail'] }}</td>
-                        <td>{{ $pessoa['categoria']['nome'] }}</td>
+                        <td>{{ $pessoa['categoria'] }}</td>
                         <td>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editPessoa"><i
                                     class="far fa-edit"></i></button>
@@ -48,9 +48,9 @@
 @endsection
 @section('selectEditPessoa')
 <select name="categoria" class="form-control">
-    <option value="Admin">Admin</option>
-    <option value="Gerente">Gerente</option>
-    <option value="Normal">Normal</option>
+    <option value="1">Admin</option>
+    <option value="2">Gerente</option>
+    <option value="3">Normal</option>
 </select>
 @endsection
 @section('script')
