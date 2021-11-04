@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Pessoa extends Model
 {
     use HasFactory;
-
+    protected $table = 'Pessoa';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'codigo','nome', 'e-mail','categoria'
+        'nome', 'e-mail','categoria'
     ];
 
     /**

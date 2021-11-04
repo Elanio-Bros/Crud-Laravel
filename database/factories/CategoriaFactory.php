@@ -21,8 +21,8 @@ class CategoriaFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'codigo' => 2,
+        return[
+            'codigo' => 1,
             'nome' => 'Admin'
         ];
     }

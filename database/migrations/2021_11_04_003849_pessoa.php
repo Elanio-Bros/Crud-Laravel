@@ -14,10 +14,11 @@ class Pessoa extends Migration
     public function up()
     {
         Schema::create('Pessoa', function (Blueprint $table) {
-            $table->integer('codigo')->unique();
+            $table->increments('codigo')->unique();
             $table->string('nome');
             $table->string('e-mail');
-            $table->string('categoria')->reference('codigo')->on('Categoria');
+            $table->integer('categoria');
+            $table->foreign('categoria')->references('codigo')->on('categoria');
             $table->timestamps();
         });
     }
