@@ -1,36 +1,47 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
-//front
-$router->get('/', function () {
-    return view('welcome');
-});
 
-//api
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('/', function () use ($router) {
-        return $router->app->version();
-    });
-    $router->get('/pessoas','PessoaController@getPessoas');
-    $router->get('/pessoas/categoria','PessoaController@getPessoascategoria');
-    $router->get('/pessoa/categoria/{codigo}','PessoaController@getPessoacategoria');
-    $router->get('/pessoa/{codigo}','PessoaController@getPessoa');
-    $router->post('/pessoa/create','PessoaController@createPessoa');
-    $router->put('/pessoa/update/{codigo}','PessoaController@updatePessoa');
-    $router->patch('/pessoa/update/{codigo}','PessoaController@updatePatchPessoa');
-    $router->delete('/pessoa/delete/{codigo}','PessoaController@deletePessoa');
-    // $router->get('/categoria', function () use ($router) {
-    //     return $router->app->version();
-    // });
+Route::get('/', function () {
+    $direct = Request::create('/api/pessoas', 'GET'); 
+    $response = json_decode(Route::dispatch($direct)->getContent(),true);
+    return view('welcome',['response'=>$response['data']]);
+});
+Route::get('/pessoas/categoria', function (Request $request) {
+    $direct = Request::create('/api/pessoas/categoria?'.$request->input('page'), 'GET'); 
+    $response = json_decode(Route::dispatch($direct)->getContent(),true);
+    return view('pessoas_categoria',['data'=>$response['data'],'links'=>$response['links']]);
+});
+Route::get('/pessoas', function (Request $request) {
+    $direct = Request::create('/api/pessoas?'.$request->input('page'), 'GET'); 
+    $response = json_decode(Route::dispatch($direct)->getContent(),true);
+    return view('pessoas_categoria',['data'=>$response['data'],'links'=>$response['links']]);
+});
+Route::post('/addPessoa', function (Request $request) {
+    $direct=Request::create('/api/pessoa/create','POST',$request->except('_token'));
+    Route::dispatch($direct);
+    return redirect(url()->previous());
+});
+Route::get('/delete/{codigo}', function ($codigo) {
+    $direct=Request::create('/api/pessoa/delete/'.$codigo,'POST');
+    Route::dispatch($direct);
+    return redirect(url()->previous());
+});
+Route::post('/editPessoa/{codigo}', function (Request $request) {
+    dd($request->all());
+    $direct=Request::create('/pessoa/update/{codigo}','POST',$request->except('_token'));
+    Route::dispatch($direct);
+    return redirect(url()->previous());
 });

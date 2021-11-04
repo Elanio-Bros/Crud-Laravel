@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pessoa;
 use App\Models\Categoria;
+use Hamcrest\Type\IsInteger;
 use Illuminate\Http\Request;
 
 class PessoaController extends Controller
@@ -16,11 +17,11 @@ class PessoaController extends Controller
      */
     public function getPessoas()
     {
-        return response()->json(Pessoa::all(), 200);
+        return response()->json(Pessoa::all()->paginate(5), 200);
     }
     public function getPessoascategoria()
     {
-        return response()->json(Pessoa::with('categoria')->get(), 200);
+        return response()->json(Pessoa::with('categoria')->paginate(5), 200);
     }
     public function getPessoa($codigo)
     {
@@ -48,28 +49,34 @@ class PessoaController extends Controller
         $this->validate($request, [
             'nome' => 'required|string',
             'email' => 'required|email',
-            'categoria' => 'required|integer'
+            'categoria' => 'required'
         ]);
+        $categoria = $request->input('categoria');
         Pessoa::find($codigo)->update(
             [
                 'nome' => $request->input('nome'),
                 'e-mail' => $request->input('email'),
-                'categoria' => $request->input('categoria')
+                'categoria' => is_int($categoria) ? $categoria : Categoria::where('nome', $categoria)->first()->codigo,
             ]
         );
         return response()->json(['message' => 'UPDATED'], 202);
     }
     public function updatePatchPessoa($codigo, Request $request)
     {
+        Categoria::where('nome', $request->input('categoria'))->first()->codigo;
         $this->validate($request, [
             'nome' => 'string',
             'email' => 'email',
-            'categoria' => 'integer'
         ]);
-        $req=$request->only('nome','email','categoria');
-        if(array_key_exists('email',$req)){
-            $req['e-mail']= $req['email'];
+
+        $req = $request->only('nome', 'email', 'categoria');
+        if (array_key_exists('email', $req)) {
+            $req['e-mail'] = $req['email'];
             unset($req['email']);
+        }
+        if (array_key_exists('categoria', $req)) {
+            $categoria = $request->input('categoria');
+            $req['categoria'] = is_int($categoria) ? $categoria : Categoria::where('nome', $categoria)->first()->codigo;
         }
         Pessoa::find($codigo)->update($req);
         return response()->json(['message' => 'UPDATED'], 202);
@@ -77,7 +84,7 @@ class PessoaController extends Controller
     public function deletePessoa($codigo)
     {
         Pessoa::find($codigo)->delete();
-        return response()->json(['message' => 'DELETED '], 200);
+        return response()->json(['message' => 'DELETED'], 200);
     }
     public function getCateogias()
     {
